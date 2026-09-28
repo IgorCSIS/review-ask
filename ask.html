@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Same policy as the console, and for the same reason. First in head. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#070E18" />
+
+    <title>Leave a review for East County Comfort (sample)</title>
+    <meta
+      name="description"
+      content="The branded page a homeowner lands on after a finished job. One button through to Google. Part of a simulated demo for a sample business."
+    />
+    <meta name="author" content="Igor Lima" />
+    <link rel="canonical" href="https://igorcsis.github.io/review-ask/ask.html" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <meta name="robots" content="noindex" />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="homeowner">
+    <header class="site-header">
+      <div class="wrap">
+        <span class="wordmark">
+          <img src="assets/logo.svg" alt="" width="28" height="28" />
+          Review Ask
+        </span>
+        <span class="chip chip-demo">Demo: simulated messages, sample data.</span>
+      </div>
+    </header>
+
+    <main class="ask-main">
+      <div class="ask-card card">
+        <div class="brand-block">
+          <img src="assets/logo.svg" alt="" width="40" height="40" />
+          <div>
+            <p class="brand-name">East County Comfort</p>
+            <p class="brand-tag">Sample business</p>
+          </div>
+        </div>
+
+        <h1 id="ask-title">Thanks for choosing East County Comfort.</h1>
+        <p class="ask-body" id="ask-body">
+          If you have a minute, an honest Google review helps other East County homeowners find us.
+        </p>
+
+        <a
+          class="btn btn-primary btn-block"
+          id="review-button"
+          href="https://search.google.com/local/writereview?placeid=SAMPLE_PLACE_ID"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Leave a Google review
+        </a>
+
+        <p class="step-note sample-label">
+          Sample link for this demo. A live install opens the real Google review form for your
+          business.
+        </p>
+        <p class="sample-url" id="sample-url"></p>
+
+        <p class="ask-secondary">
+          <button type="button" class="link-button" id="no-thanks">No thanks</button>
+        </p>
+
+        <p class="step-note privacy-line">
+          This page doesn't collect anything. No forms, no cookies, no tracking.
+        </p>
+      </div>
+
+      <p class="step-note back-line">
+        <a class="inline-link" href="index.html">Back to the owner demo</a>
+      </p>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>Built by Igor Lima &middot; El Cajon / East County</p>
+        <p class="step-note">Demo: simulated messages, sample data.</p>
+      </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="ask.js"></script>
+  </body>
+</html>

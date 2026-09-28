@@ -1,0 +1,1279 @@
+/*
+ * Review Ask: the demo's styles.
+ *
+ * Hand written rather than a framework on purpose. The whole demo is a
+ * handful of files served straight from GitHub Pages, so there is no build
+ * step, no dependency to keep current, and nothing that can quietly drop a
+ * class it compiled. It also stays free to host forever, which is the point.
+ *
+ * The tokens are the contractor lane shared with the Instant Lead Response,
+ * Lead Follow-up and Ridgeview demos: deep ink, sand text, ember accent.
+ * System fonts only, so the page makes no network request once it has loaded.
+ * The Content-Security-Policy on both pages forbids inline styles, so there
+ * is not a single style attribute in the markup either.
+ */
+
+
+:root {
+  --ink-950: #070e18;
+  --ink-900: #0b1220;
+  --ink-800: #111c2e;
+  --ink-700: #1b2a40;
+  --ink-600: #2a3d57;
+
+  --sand-50: #f8fafc;
+  --sand-200: #cbd5e1;
+  --sand-400: #8fa3bc;
+
+  --ember-400: #f59e0b;
+  --ember-500: #d97706;
+  --ember-600: #c2410c;
+
+  /* No mint token. Done states are ember; mint is the security lane. */
+  --warn: #fbbf24;
+  --warn-bg: #2a2109;
+  --bad: #f87171;
+  --bad-bg: #2b1417;
+
+  --radius-card: 0.875rem;
+  --tap: 2.75rem;
+
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--ink-950);
+  color: var(--sand-200);
+  font-family: var(--sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ember, not teal. Teal belongs to the security lane. */
+:focus-visible {
+  outline: 2px solid var(--ember-400);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+::selection {
+  background: var(--ember-500);
+  color: #fff;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--sand-50);
+  line-height: 1.2;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--ember-400);
+}
+
+.wrap {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------------------------------------------------ chrome */
+
+/*
+ * Sticky on purpose. The honesty chip is the one thing on this page that has
+ * to be readable at every scroll position, and a header that scrolls away
+ * takes it with it. The bar is kept short so it costs little on a phone.
+ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--ink-950);
+  border-bottom: 1px solid var(--ink-700);
+}
+
+.site-header .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 0.75rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/*
+ * Anything an in-page link jumps to has to clear the sticky bar, or the
+ * heading lands underneath it and the visitor thinks the link is broken.
+ */
+:target,
+[id] {
+  scroll-margin-top: 6rem;
+}
+
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 600;
+  color: var(--sand-50);
+}
+
+.wordmark img {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+/* ------------------------------------------------------------------- chips */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/*
+ * The honesty chip. Two pixels of border rather than one, so it reads as a
+ * notice rather than another label, and stays distinct from the filled
+ * ember state badges on the panels.
+ */
+.chip-demo {
+  border: 2px solid rgba(245, 158, 11, 0.6);
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--ember-400);
+}
+
+.chip-quiet {
+  border: 1px solid var(--ink-600);
+  color: var(--sand-400);
+}
+
+/*
+ * A step that finished. Filled ember, not mint: this page shares the
+ * contractor lane with the Ridgeview and Lead Follow-up demos, and mint
+ * green belongs to the security lane, which is a different business.
+ */
+.chip-done {
+  background: var(--ember-600);
+  color: var(--sand-50);
+}
+
+.chip-warn {
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.chip-bad {
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+
+/* ----------------------------------------------------------------- buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: var(--tap);
+  padding: 0.65rem 1.15rem;
+  border-radius: 0.65rem;
+  border: 1px solid transparent;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--ember-500);
+  color: var(--ink-950);
+}
+
+.btn-primary:hover {
+  background: var(--ember-400);
+}
+
+.btn-ghost {
+  border-color: var(--ink-600);
+  background: transparent;
+  color: var(--sand-200);
+}
+
+.btn-ghost:hover {
+  border-color: var(--ember-400);
+  color: var(--ember-400);
+}
+
+/* A disabled control must not look live. */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  background: var(--ember-500);
+  border-color: transparent;
+  color: var(--ink-950);
+}
+
+.btn-ghost:disabled:hover {
+  background: transparent;
+  border-color: var(--ink-600);
+  color: var(--sand-200);
+}
+
+/* -------------------------------------------------------------------- hero */
+
+/*
+ * Longhand, not the padding shorthand. The hero is also a .wrap, and a
+ * shorthand here would reset that class's side gutters to zero and push the
+ * headline flat against the edge of a phone screen.
+ */
+.hero {
+  padding-top: 2rem;
+}
+
+.hero h1 {
+  font-size: 1.75rem;
+  letter-spacing: -0.02em;
+  max-width: 20ch;
+}
+
+.hero .sub {
+  margin-top: 0.9rem;
+  max-width: 54ch;
+  color: var(--sand-200);
+}
+
+.hero-actions {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.near-cta {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ------------------------------------------------------- segmented control */
+
+.source-pick {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.source-pick-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sand-400);
+}
+
+.segmented {
+  display: inline-flex;
+  padding: 0.2rem;
+  gap: 0.2rem;
+  border: 1px solid var(--ink-600);
+  border-radius: 0.7rem;
+  background: var(--ink-900);
+}
+
+.seg {
+  min-height: var(--tap);
+  padding: 0.4rem 0.9rem;
+  border: 1px solid transparent;
+  border-radius: 0.55rem;
+  background: transparent;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--sand-200);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.seg:hover:not([aria-checked="true"]):not(:disabled) {
+  background: var(--ink-800);
+}
+
+.seg[aria-checked="true"] {
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.5);
+  color: var(--ember-400);
+}
+
+.seg:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* -------------------------------------------------------------------- card */
+
+.card {
+  border: 1px solid var(--ink-700);
+  border-radius: var(--radius-card);
+  background: var(--ink-800);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--ink-700);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+.card-header h3 {
+  font-size: 0.95rem;
+}
+
+.card-body {
+  padding: 1.1rem;
+}
+
+/* The owner side is the one being sold, so it carries the accent. */
+.card-owner .card-header {
+  background: rgba(217, 119, 6, 0.12);
+  border-bottom-color: rgba(245, 158, 11, 0.25);
+}
+
+.card-customer .card-header {
+  background: var(--ink-900);
+}
+
+/* ------------------------------------------------------------------ panels */
+
+.panels {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.panel-empty {
+  color: var(--sand-400);
+  font-size: 0.92rem;
+}
+
+/* A message the customer would receive. Left aligned, plain. */
+.bubble {
+  border: 1px solid var(--ink-700);
+  background: var(--ink-950);
+  border-radius: 0.75rem;
+  padding: 0.85rem 0.95rem;
+  font-size: 0.92rem;
+  color: var(--sand-200);
+}
+
+.bubble + .bubble {
+  margin-top: 0.65rem;
+}
+
+.bubble-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--sand-400);
+}
+
+/* The customer's own reply, so it reads as coming from the other side. */
+.bubble-reply {
+  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.07);
+}
+
+.notify {
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: var(--ink-950);
+  border-radius: 0.75rem;
+  padding: 0.95rem;
+}
+
+.notify-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.75rem;
+  margin-top: 0.7rem;
+  font-size: 0.9rem;
+}
+
+.notify-line dt {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sand-400);
+  margin: 0;
+  min-width: 5.5rem;
+}
+
+.notify-line dd {
+  margin: 0;
+  color: var(--sand-50);
+  font-weight: 600;
+}
+
+/* Marks the sample phone itself, not just the page around it. */
+.notify-tag {
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  border-radius: 999px;
+  padding: 0.05rem 0.45rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ember-400);
+}
+
+.notify-body {
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--ink-700);
+  font-size: 0.92rem;
+}
+
+/* ---------------------------------------------------------------- timeline */
+
+.timeline-section {
+  margin-top: 2rem;
+}
+
+.timeline-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.timeline-head h2 {
+  font-size: 1.05rem;
+}
+
+/*
+ * The elapsed readout. It exists because the steps really do land at 8 and
+ * 12 seconds, and a number counting up is the difference between a page that
+ * looks slow and a page that is visibly timing itself.
+ */
+.elapsed {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--ink-600);
+  color: var(--sand-400);
+}
+
+.elapsed[data-running="true"] {
+  border-color: rgba(245, 158, 11, 0.5);
+  color: var(--ember-400);
+}
+
+.timeline {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.step {
+  position: relative;
+  padding: 0 0 1.35rem 2.25rem;
+  border-left: 2px solid var(--ink-700);
+  margin-left: 0.5rem;
+}
+
+.step:last-child {
+  padding-bottom: 0;
+  border-left-color: transparent;
+}
+
+.step::before {
+  content: "";
+  position: absolute;
+  left: -0.55rem;
+  top: 0.15rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  border-radius: 999px;
+  border: 2px solid var(--ink-600);
+  background: var(--ink-950);
+}
+
+.step-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+/*
+ * Pending is the state most of this timeline spends most of its time in, so
+ * it is set at reading strength rather than dimmed to near invisibility. The
+ * difference between pending and done is the rail and the dot, not whether
+ * you can make the words out.
+ */
+.step-clock {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--sand-200);
+  min-width: 2.2rem;
+}
+
+.step-label {
+  color: var(--sand-200);
+  font-weight: 600;
+}
+
+.step-note {
+  margin-top: 0.2rem;
+  font-size: 0.88rem;
+  color: var(--sand-400);
+}
+
+/* Active: the step being simulated right now. */
+.step[data-state="active"] {
+  border-left-color: var(--ember-500);
+}
+
+.step[data-state="active"]::before {
+  border-color: var(--ember-400);
+  background: var(--ember-500);
+  animation: step-pulse 1s ease-in-out infinite;
+}
+
+.step[data-state="active"] .step-label,
+.step[data-state="active"] .step-clock {
+  color: var(--ember-400);
+}
+
+/*
+ * Done: finished and staying on screen. Ember like the active step, but
+ * solid and still, where active pulses. The difference a visitor reads is
+ * movement, not hue, which is also what keeps this legible without colour.
+ */
+.step[data-state="done"] {
+  border-left-color: var(--ember-600);
+}
+
+.step[data-state="done"]::before {
+  border-color: var(--ember-400);
+  background: var(--ember-500);
+}
+
+.step[data-state="done"] .step-label {
+  color: var(--sand-50);
+}
+
+.step[data-state="done"] .step-clock {
+  color: var(--ember-400);
+}
+
+@keyframes step-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(245, 158, 11, 0);
+  }
+}
+
+/* --------------------------------------------------------------- accordion */
+
+.accordion {
+  margin-top: 2rem;
+}
+
+.accordion summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.9rem 1.1rem;
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+  color: var(--sand-200);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion summary::before {
+  content: "\25B8";
+  margin-right: 0.6rem;
+  color: var(--sand-400);
+}
+
+.accordion[open] summary::before {
+  content: "\25BE";
+}
+
+.accordion .card-body {
+  border-top: 1px solid var(--ink-700);
+}
+
+.accordion h4 {
+  margin: 0 0 0.3rem;
+  color: var(--sand-50);
+  font-size: 0.92rem;
+}
+
+.accordion .item + .item {
+  margin-top: 1.1rem;
+}
+
+.accordion p {
+  font-size: 0.92rem;
+  color: var(--sand-400);
+}
+
+/* ------------------------------------------------------------------- offer */
+
+.offer {
+  margin-top: 2.5rem;
+}
+
+.offer-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.offer-item {
+  border: 1px solid var(--ink-700);
+  border-radius: 0.65rem;
+  background: var(--ink-900);
+  padding: 0.9rem 1rem;
+}
+
+.offer-item dt {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--sand-400);
+}
+
+.offer-item dd {
+  margin: 0.35rem 0 0;
+  color: var(--sand-50);
+  font-weight: 600;
+}
+
+/* ------------------------------------------------------------------ status */
+
+.status {
+  margin-top: 1rem;
+  border-radius: 0.65rem;
+  padding: 0.7rem 0.95rem;
+  font-size: 0.92rem;
+  border: 1px solid var(--ink-600);
+  background: var(--ink-900);
+  color: var(--sand-200);
+}
+
+.status[data-tone="error"] {
+  border-color: rgba(248, 113, 113, 0.4);
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+
+/*
+ * The status line never hides. At rest it carries the honesty note, so the
+ * first thing under the button that starts the demo is what the demo will
+ * not do.
+ */
+.status[hidden] {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ footer */
+
+.site-footer {
+  margin-top: 3rem;
+  border-top: 1px solid var(--ink-700);
+}
+
+.site-footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+  font-size: 0.88rem;
+  color: var(--sand-400);
+}
+
+/* ------------------------------------------------------------------ larger */
+
+@media (min-width: 40rem) {
+  .hero {
+    padding-top: 3rem;
+  }
+
+  .hero h1 {
+    font-size: 2.25rem;
+  }
+
+  .panels {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .offer-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Reduced motion: no pulse, no transitions. The steps still sequence, they
+   just arrive without animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   Review Ask components
+   ========================================================================== */
+
+/* Skip link. First tab stop, visible the moment it takes focus. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 10;
+  padding: 0.7rem 1rem;
+  background: var(--ember-500);
+  color: var(--ink-950);
+  font-weight: 700;
+  border-radius: 0 0 0.6rem 0;
+}
+
+.skip-link:focus-visible {
+  left: 0;
+}
+
+/* Status tones beyond the error one the shared sheet ships with. */
+.status[data-tone="done"] {
+  border-color: rgba(245, 158, 11, 0.45);
+  color: var(--ember-400);
+}
+
+.status[data-tone="warn"] {
+  border-color: rgba(251, 191, 36, 0.45);
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+
+.status[data-tone="bad"] {
+  border-color: rgba(248, 113, 113, 0.4);
+  background: var(--bad-bg);
+  color: var(--bad);
+}
+
+.status:empty {
+  display: none;
+}
+
+/* The selected job, sitting between the sub and the controls. */
+.selected-line {
+  margin-top: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  align-items: baseline;
+  font-size: 0.95rem;
+  color: var(--sand-200);
+}
+
+.inline-link {
+  color: var(--ember-400);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.inline-link:hover {
+  color: var(--sand-50);
+}
+
+.noscript-line {
+  margin: 0 auto 1rem;
+  border: 1px solid var(--ink-600);
+  border-radius: var(--radius-card);
+  background: var(--warn-bg);
+  color: var(--warn);
+  padding: 0.85rem 1rem;
+}
+
+.timeline-note {
+  margin-top: 0.35rem;
+}
+
+/* ------------------------------------------------------------- job list */
+
+.jobs-section {
+  padding-top: 2.25rem;
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-head h2 {
+  font-size: 1.05rem;
+}
+
+.btn-small {
+  min-height: var(--tap);
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+}
+
+.job-list {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.job-card {
+  display: grid;
+  gap: 0.3rem;
+  width: 100%;
+  min-height: var(--tap);
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--ink-700);
+  background: var(--ink-800);
+  color: var(--sand-200);
+  font: inherit;
+  cursor: pointer;
+}
+
+.job-card:hover:not([aria-checked="true"]):not(:disabled) {
+  border-color: var(--ink-600);
+}
+
+.job-card[aria-checked="true"] {
+  border-color: var(--ember-500);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.job-card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.job-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.job-name {
+  color: var(--sand-50);
+  font-weight: 600;
+}
+
+.job-meta {
+  font-size: 0.9rem;
+}
+
+.job-finished {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sand-400);
+}
+
+.jobs-empty {
+  margin-top: 0.85rem;
+}
+
+.jobs-link-line {
+  margin-top: 1rem;
+}
+
+/* ------------------------------------------------------ template editor */
+
+.template-fields {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.template-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.template-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sand-400);
+}
+
+.template-input {
+  width: 100%;
+  min-height: var(--tap);
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--ink-600);
+  background: var(--ink-900);
+  color: var(--sand-200);
+  font: inherit;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.template-count {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--sand-400);
+  margin: 0;
+}
+
+.template-count[data-over="true"] {
+  color: var(--warn);
+}
+
+.template-preview-label {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sand-400);
+  margin: 0.25rem 0 0;
+}
+
+.template-preview {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  border-left: 2px solid var(--ember-500);
+  padding: 0.35rem 0 0.35rem 0.7rem;
+  font-size: 0.92rem;
+  color: var(--sand-200);
+}
+
+.template-actions {
+  margin-top: 1.25rem;
+}
+
+/* --------------------------------------------------------------- panels */
+
+.email-card {
+  border: 1px solid var(--ink-600);
+  border-radius: 0.7rem;
+  background: var(--ink-900);
+  padding: 0.75rem 0.9rem;
+}
+
+.email-card + .email-card {
+  margin-top: 0.75rem;
+}
+
+.email-subject {
+  color: var(--sand-50);
+  font-weight: 600;
+  margin-top: 0.3rem;
+}
+
+.email-body {
+  margin-top: 0.4rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 0.92rem;
+}
+
+.bubble-body {
+  overflow-wrap: anywhere;
+}
+
+.trail-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--ink-700);
+}
+
+.trail-line:last-child {
+  border-bottom: 0;
+}
+
+.trail-label {
+  color: var(--sand-50);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.trail-detail {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--sand-400);
+  overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------- the chain */
+
+.chain {
+  padding-top: 2.25rem;
+}
+
+.chain h2 {
+  font-size: 1.05rem;
+}
+
+.chain-list {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.6rem;
+  color: var(--sand-200);
+}
+
+.chain-list li {
+  padding-left: 0.2rem;
+}
+
+.chain-step {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sand-400);
+}
+
+.chain-here {
+  color: var(--sand-50);
+}
+
+/* ---------------------------------------------------------------- offer */
+
+.offer h2 {
+  font-size: 1.05rem;
+}
+
+.offer-sub {
+  margin-top: 0.5rem;
+}
+
+.price-line {
+  margin-top: 1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ember-400);
+}
+
+.offer-note {
+  margin-top: 0.6rem;
+}
+
+/* ------------------------------------------------------ homeowner page */
+
+.ask-main {
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2.5rem;
+}
+
+.ask-card {
+  background: var(--ink-900);
+  padding: 1.25rem 1.15rem 1.4rem;
+}
+
+.brand-block {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.brand-name {
+  color: var(--sand-50);
+  font-weight: 700;
+}
+
+.brand-tag {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sand-400);
+}
+
+.ask-card h1 {
+  margin-top: 1.25rem;
+  font-size: 1.5rem;
+}
+
+.ask-body {
+  margin-top: 0.75rem;
+  color: var(--sand-200);
+}
+
+.btn-block {
+  display: flex;
+  width: 100%;
+  margin-top: 1.5rem;
+  min-height: 3rem;
+  font-size: 1.02rem;
+}
+
+.sample-label {
+  margin-top: 0.7rem;
+}
+
+.sample-url {
+  margin-top: 0.35rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--sand-400);
+  overflow-wrap: anywhere;
+}
+
+.ask-secondary {
+  margin-top: 1.25rem;
+}
+
+.link-button {
+  min-height: var(--tap);
+  padding: 0.5rem 0;
+  background: none;
+  border: 0;
+  color: var(--sand-400);
+  font: inherit;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  color: var(--sand-50);
+}
+
+.privacy-line {
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--ink-700);
+  padding-top: 0.9rem;
+}
+
+.back-line {
+  margin-top: 1.25rem;
+  text-align: center;
+}
+
+/*
+ * The honesty chip carries a full sentence, not a word, so it has to be
+ * allowed to wrap. Left at the shared nowrap it pushed the page 7px wide at
+ * 320px, which is the one width where a horizontal scrollbar is least
+ * forgivable.
+ */
+.chip-demo {
+  white-space: normal;
+}
+
+/*
+ * Text links get a real target rather than the height of their own line box.
+ * inline-flex keeps them sitting in the sentence where they were, and the
+ * min-height is what a thumb actually needs.
+ */
+.inline-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+}
+
+.chain-list li {
+  padding-left: 0.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+ * Anchors that are buttons should not carry the underline anchors get. The
+ * Instant Lead Response sheet leaves it on, which puts a line through the
+ * middle of a solid ember pill; worth diverging from the family by one
+ * declaration rather than copying the artefact across.
+ */
+.btn {
+  text-decoration: none;
+}
+
+/*
+ * The selected job and its "Change job" link belong on one line of thought.
+ * Giving the link a 44px target added a row gap that read as two unrelated
+ * lines, so the row gap goes and the column gap stays.
+ */
+.selected-line {
+  gap: 0 0.75rem;
+  align-items: center;
+}

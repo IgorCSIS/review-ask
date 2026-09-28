@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!--
+      First element in head on purpose: a policy that arrives after the first
+      script tag has already lost. default-src 'none' means anything not named
+      below is refused, so a stray CDN link or a tracker pasted in later fails
+      loudly in the console instead of quietly working.
+
+      frame-ancestors cannot be set from a meta tag, only from a response
+      header, and GitHub Pages does not let you set headers. Noted in the
+      README rather than pretended away.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#070E18" />
+
+    <title>Review Ask: the after-job review demo for East County trades</title>
+    <meta
+      name="description"
+      content="A simulated demo of the after-job Google review ask for HVAC and plumbing owners in East County San Diego. One short ask by text or email, a gentle reminder if the link was not tapped, and a thank-you after. Works alongside Jobber or Housecall Pro."
+    />
+    <meta name="author" content="Igor Lima" />
+    <link rel="canonical" href="https://igorcsis.github.io/review-ask/" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+    <!--
+      Absolute URLs on purpose. Scrapers do not resolve relative paths, and a
+      project page served from /review-ask/ makes that easy to get wrong. No
+      og:image tag: there is no image file in this repo, and pointing at one
+      that does not exist is worse than having none.
+    -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Review Ask" />
+    <meta property="og:title" content="Finished the job. Did you ask for the review?" />
+    <meta
+      property="og:description"
+      content="A simulated demo: one short review ask by text or email, a reminder if the link was not tapped, and a thank-you after. Nothing is sent."
+    />
+    <meta property="og:url" content="https://igorcsis.github.io/review-ask/" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to the demo</a>
+
+    <header class="site-header">
+      <div class="wrap">
+        <span class="wordmark">
+          <img src="assets/logo.svg" alt="" width="28" height="28" />
+          Review Ask
+        </span>
+        <!--
+          The honesty chip lives in the header so it is on screen at every
+          scroll position, not only above the fold. Nothing here sends
+          anything, and that has to be impossible to miss.
+        -->
+        <span class="chip chip-demo">Demo: simulated messages, sample data.</span>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero wrap">
+        <h1>Finished the job. Did you ask for the review?</h1>
+        <p class="sub">
+          Pick a finished job and send one short ask by text or email. The reminder and thank-you
+          go out on their own. Works alongside Jobber or Housecall Pro.
+        </p>
+
+        <p class="selected-line">
+          <span id="selected-job">Sample job: Maria Lopez &middot; AC repair &middot; El Cajon</span>
+          <a class="inline-link" href="#jobs">Change job</a>
+        </p>
+
+        <div class="source-pick">
+          <span class="source-pick-label" id="channel-label">Send the ask by</span>
+          <div class="segmented" role="radiogroup" aria-labelledby="channel-label">
+            <button
+              type="button"
+              class="seg"
+              role="radio"
+              aria-checked="true"
+              tabindex="0"
+              data-channel="text"
+            >
+              Text
+            </button>
+            <button
+              type="button"
+              class="seg"
+              role="radio"
+              aria-checked="false"
+              tabindex="-1"
+              data-channel="email"
+            >
+              Email
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <button id="run-ask" type="button" class="btn btn-primary">Run review ask</button>
+          <a class="btn btn-ghost" href="#rules">How this stays inside Google's rules</a>
+        </div>
+
+        <!--
+          One live region for the whole run, directly under the button that
+          starts it, carrying the honesty line at rest. The first thing under
+          the call to action is what the page will not do.
+        -->
+        <p id="run-status" class="status" role="status" aria-live="polite" data-tone="info">
+          Demo only. Nothing is sent.
+        </p>
+
+        <div class="near-cta">
+          <span class="chip chip-quiet">Keeps your Jobber or Housecall Pro</span>
+          <span class="chip chip-quiet">Every customer gets the same ask</span>
+        </div>
+      </section>
+
+      <noscript>
+        <p class="wrap noscript-line">
+          This demo needs JavaScript. Nothing on this page sends anything either way.
+        </p>
+      </noscript>
+
+      <section class="panels wrap" aria-label="What each side sees">
+        <article class="card card-customer">
+          <div class="card-header">
+            <h3>What the homeowner gets</h3>
+            <span class="chip chip-quiet" id="homeowner-state">Waiting</span>
+          </div>
+          <div class="card-body" id="homeowner-body">
+            <p class="panel-empty">Nothing sent yet. Pick a job and run the ask.</p>
+          </div>
+        </article>
+
+        <article class="card card-owner">
+          <div class="card-header">
+            <h3>What you see</h3>
+            <span class="chip chip-quiet" id="owner-state">Waiting</span>
+          </div>
+          <div class="card-body" id="owner-body">
+            <p class="panel-empty">
+              You'll see each message go out, and when the link gets tapped.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="timeline-section wrap" aria-label="What happens, and when">
+        <div class="timeline-head">
+          <h2>What happens, and when</h2>
+          <!--
+            Hidden from assistive tech: the status line already announces each
+            stage, and a counter updating ten times a second would talk over it.
+          -->
+          <span class="elapsed" id="elapsed" data-running="false" aria-hidden="true">0s</span>
+        </div>
+        <p class="step-note timeline-note">
+          Compressed for the demo. Two days play out in about 11 seconds.
+        </p>
+
+        <ol class="timeline" id="timeline">
+          <li class="step" data-step="ask" data-state="pending">
+            <div class="step-head">
+              <span class="step-clock">0s</span>
+              <span class="step-label">Review ask sent</span>
+            </div>
+            <p class="step-note">Real life: right after you mark the job done.</p>
+          </li>
+          <li class="step" data-step="reminder" data-state="pending">
+            <div class="step-head">
+              <span class="step-clock">4s</span>
+              <span class="step-label">Gentle reminder sent</span>
+            </div>
+            <p class="step-note">
+              Real life: 2 days later, only if the link hasn't been tapped. One reminder, then it
+              stops.
+            </p>
+          </li>
+          <li class="step" data-step="tapped" data-state="pending">
+            <div class="step-head">
+              <span class="step-clock">8s</span>
+              <span class="step-label">Review link tapped</span>
+            </div>
+            <p class="step-note">
+              Real life: whenever they get to it. They land on your page and tap through to Google.
+            </p>
+          </li>
+          <li class="step" data-step="thanks" data-state="pending">
+            <div class="step-head">
+              <span class="step-clock">11s</span>
+              <span class="step-label">Thank-you sent</span>
+            </div>
+            <p class="step-note">Real life: right after the tap. No more asks.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="jobs-section wrap" id="jobs" aria-label="Finished jobs">
+        <div class="section-head">
+          <h2>Finished jobs (sample)</h2>
+          <button id="reset-demo" type="button" class="btn btn-ghost btn-small">Reset demo</button>
+        </div>
+
+        <div class="job-list" id="job-list" role="radiogroup" aria-label="Pick a finished job">
+          <p class="panel-empty" id="job-loading">Loading sample jobs&hellip;</p>
+        </div>
+
+        <p class="panel-empty jobs-empty" id="jobs-empty" hidden>
+          Every sample job has been asked. Hit Reset demo to start over.
+        </p>
+
+        <p class="step-note jobs-link-line">
+          <a class="inline-link" id="see-homeowner" href="ask.html?job=j1">See what Maria sees</a>
+        </p>
+      </section>
+
+      <details class="accordion card wrap" id="templates">
+        <summary>Your messages</summary>
+        <div class="card-body">
+          <p class="step-note">
+            Edit the wording. Saved in this browser only. Use {first_name}, {company}, {job},
+            {review_link}.
+          </p>
+          <div id="template-fields" class="template-fields"></div>
+          <div class="hero-actions template-actions">
+            <button id="save-templates" type="button" class="btn btn-primary btn-small">
+              Save templates
+            </button>
+            <button id="restore-templates" type="button" class="btn btn-ghost btn-small">
+              Restore defaults
+            </button>
+          </div>
+          <p
+            id="template-status"
+            class="status"
+            role="status"
+            aria-live="polite"
+            data-tone="info"
+          ></p>
+        </div>
+      </details>
+
+      <details class="accordion card wrap" id="rules">
+        <summary>How this stays inside Google's rules</summary>
+        <div class="card-body">
+          <div class="item">
+            <h4>Every customer gets the same ask.</h4>
+            <p>
+              No filtering for happy customers first. Google calls that review gating and doesn't
+              allow it.
+            </p>
+          </div>
+          <div class="item">
+            <h4>Nothing is offered for a review.</h4>
+            <p>No discounts, gift cards or drawings. Just a polite ask.</p>
+          </div>
+          <div class="item">
+            <h4>Honest reviews, good or bad.</h4>
+            <p>The wording asks for an honest review, never a 5-star one.</p>
+          </div>
+          <div class="item">
+            <h4>Jobber and Housecall Pro can already ask.</h4>
+            <p>
+              They stay your system of record. What this adds is your branded page, wording that
+              stays inside the rules, and a local setup with a walkthrough.
+            </p>
+          </div>
+        </div>
+      </details>
+
+      <section class="chain wrap" aria-label="The rest of the chain">
+        <h2>The rest of the chain</h2>
+        <ol class="chain-list">
+          <li>
+            <span class="chain-step">Respond fast</span>
+            <a
+              class="inline-link"
+              href="https://igorcsis.github.io/instant-lead-response/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Instant Lead Response</a
+            >
+          </li>
+          <li>
+            <span class="chain-step">Follow up</span>
+            <a
+              class="inline-link"
+              href="https://igorcsis.github.io/lead-followup/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Lead Follow-up</a
+            >
+          </li>
+          <li>
+            <span class="chain-step">Win the job</span>
+            <a
+              class="inline-link"
+              href="https://igorcsis.github.io/ridgeview-remodeling-demo/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Ridgeview Remodeling</a
+            >
+          </li>
+          <li class="chain-here">
+            <span class="chain-step">Ask for the review</span>
+            <span>Review Ask <span class="chip chip-done">You are here</span></span>
+          </li>
+        </ol>
+      </section>
+
+      <section class="offer wrap" aria-label="What a local install costs">
+        <h2>Want this for your shop?</h2>
+        <p class="sub offer-sub">
+          Done-for-you review ask for East County trades: your branded page, your text and email
+          wording, and your real Google review link, on top of Jobber or Housecall Pro.
+        </p>
+
+        <p class="price-line">
+          $497 to $997 done-for-you, or $1,497 bundled with Instant Lead Response.
+        </p>
+
+        <p class="step-note offer-note">
+          You keep Jobber or Housecall Pro, and you pay your own messaging usage.
+        </p>
+
+        <p class="step-note">
+          Reply "reviews" to my email, or write to niftystudiodesigns@gmail.com.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="mailto:niftystudiodesigns@gmail.com?subject=reviews">
+            Email me about reviews
+          </a>
+          <a
+            class="btn btn-ghost"
+            href="https://igorcsis.github.io/niftyai-portfolio/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            See the rest of my work
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>Built by Igor Lima &middot; El Cajon / East County</p>
+        <p class="step-note">Demo: simulated messages, sample data.</p>
+      </div>
+    </footer>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

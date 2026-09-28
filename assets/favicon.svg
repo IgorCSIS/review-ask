@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Review Ask">
+  <title>Review Ask</title>
+  <rect width="32" height="32" rx="7" fill="#070E18"/>
+  <path d="M6 9.5a2.5 2.5 0 0 1 2.5-2.5h15A2.5 2.5 0 0 1 26 9.5v9a2.5 2.5 0 0 1-2.5 2.5H14l-5.2 4.1A.6.6 0 0 1 7.8 24.6V21h-1.3A.5.5 0 0 1 6 20.5z" fill="#F59E0B"/>
+  <path d="M16 9.6l1.79 3.63 4.01.58-2.9 2.83.68 3.99L16 18.75l-3.58 1.88.68-3.99-2.9-2.83 4.01-.58z" fill="#070E18"/>
+</svg>
