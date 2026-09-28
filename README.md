@@ -55,7 +55,7 @@ compressed.
 | --- | --- | --- |
 | Pages | Two hand-written HTML files | The console is one screen and the homeowner page is one card. A framework would be more machinery than the thing it renders |
 | Styling | Plain CSS with custom properties | No build means no purge step, and no purge step means a class built at runtime cannot be silently dropped from the stylesheet |
-| Behaviour | One IIFE per page, no modules, no dependencies | Nothing to audit, nothing to update, nothing that can pull a supply chain in behind it. No ES modules, so both pages also work from `file://` |
+| Behaviour | Plain script tags, no modules, no dependencies | Each page loads `data.js` and then its own file, both wrapped in an IIFE so nothing reaches the global scope but the one test hook. Nothing to audit, nothing to update, nothing that can pull a supply chain in behind it. No ES modules, so both pages also work from `file://`, which is checked rather than assumed |
 | Timing | Compressed, and labelled as compressed | Two days of waiting is a bad demo. Pretending the reminder really goes out four seconds later would be a lie, so every step carries both clocks |
 | Storage | `localStorage` for template edits only | Wording is worth keeping between visits. Job progress is not, and a demo that remembers you already ran it is a worse demo |
 | Art | SVG for the mark and the banner | Vector stays sharp at any size and costs no bytes to scale. There is no raster in the repo, so no README tag points at a file that does not exist |
@@ -150,7 +150,10 @@ review-ask/
 │   ├── logo.svg              32x32 mark, a speech bubble with one star
 │   ├── favicon.svg           the same mark, as the tab icon
 │   └── banner.svg            1200x300 README banner
+├── README.md                 this file
 ├── CONVENTIONS.md            repository rules, including no AI attribution
+├── LICENSE                   MIT
+├── .gitignore
 └── .github/workflows/
     ├── deploy.yml            uploads the repository root to Pages
     └── no-ai-attribution.yml fails the build on any AI credit line
@@ -165,9 +168,10 @@ script, no inline `style` attribute and no inline event handler anywhere,
 because the policy forbids all three.
 
 Everything that reaches either page is built with `createElement` and
-`textContent`. There is no `innerHTML`, `outerHTML`, `insertAdjacentHTML`,
-`document.write`, `eval`, `new Function` or string `setTimeout` in this
-repository. Saved templates are treated as untrusted: parsed inside a
+`textContent`. Nothing calls `innerHTML`, `outerHTML`, `insertAdjacentHTML`,
+`document.write`, `eval`, `new Function`, or `setTimeout` with a string. Two
+comments name those APIs to explain why they are not used; there is no call to
+any of them anywhere. Saved templates are treated as untrusted: parsed inside a
 `try`/`catch`, accepted only as strings, capped at 600 characters each, and
 dropped back to the shipped default on any mismatch.
 
