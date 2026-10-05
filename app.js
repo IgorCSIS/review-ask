@@ -260,7 +260,7 @@
     );
     clear(els.ownerBody);
     els.ownerBody.appendChild(
-      make("p", "panel-empty", "You'll see each message go out, and when the link gets tapped.")
+      make("p", "panel-empty", "You'll see each simulated send, and when the link gets tapped.")
     );
     setPanelState(els.homeownerState, "Waiting", "chip-quiet");
     setPanelState(els.ownerState, "Waiting", "chip-quiet");
@@ -594,8 +594,9 @@
     running = false;
     els.run.disabled = false;
     els.run.removeAttribute("aria-busy");
+    // Run again stays the primary action. It was dropping to ghost here,
+    // which left the finished state with no ember button on the screen.
     els.run.textContent = "Run again";
-    els.run.className = "btn btn-ghost";
     els.segments.forEach(function (seg) {
       seg.disabled = false;
     });

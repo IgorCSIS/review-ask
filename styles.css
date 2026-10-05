@@ -1277,3 +1277,42 @@ a {
   gap: 0 0.75rem;
   align-items: center;
 }
+
+/*
+ * Mobile first screen.
+ *
+ * The job to be done on a phone is: see which job is selected, press Run,
+ * and read the line under it that says nothing is sent. At 375px the
+ * headline and the honesty chip were pushing that line off the bottom, so
+ * both are compressed below 40rem. Nothing moves and nothing is hidden;
+ * the type just stops taking three lines to say one thing.
+ */
+@media (max-width: 39.99rem) {
+  .hero {
+    padding-top: 1rem;
+  }
+
+  .hero h1 {
+    font-size: 1.35rem;
+    max-width: none;
+  }
+
+  /* The chip keeps its 2px ember border, which is the brand cue. Only the
+     type inside it gets smaller. */
+  .chip-demo {
+    font-size: 0.62rem;
+    padding: 0.2rem 0.6rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+/*
+ * Quiet chips carried sand-400, which held up on a desktop panel but went
+ * grey on a phone. The text moves to sand-200 and the border to the lighter
+ * ink so the Waiting badge and the near-CTA chips read at arm's length.
+ * The done and warn chips are untouched: they already carry their own fill.
+ */
+.chip-quiet {
+  border-color: var(--ink-600);
+  color: var(--sand-200);
+}

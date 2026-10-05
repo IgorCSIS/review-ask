@@ -123,7 +123,7 @@
         "{company}",
     },
     email: {
-      askSubject: "Quick favor after your {job}",
+      askSubject: "Quick ask after your {job}",
       ask:
         "Hi {first_name},\n\n" +
         "Thanks for choosing {company} for your {job}. If you have a minute, an honest review " +
