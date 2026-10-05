@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520" role="img" aria-label="How the Review Ask demo runs: four steps from the review ask to the thank-you.">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2A3D57"/></marker><marker id="ae" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F59E0B"/></marker></defs>
+<rect width="1000" height="520" fill="#070E18"/>
+<text x="32" y="46" font-size="24" fill="#F8FAFC" font-weight="700" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">How the run plays</text>
+<text x="32" y="72" font-size="15" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">Four steps on a 11 second demo clock. Nothing is sent.</text>
+<rect x="32" y="108" width="212" height="92" rx="10" fill="#0B1220" stroke="#1B2A40" stroke-width="1.5"/>
+<text x="48" y="138" font-size="14" fill="#F59E0B" font-weight="700" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">0s</text>
+<text x="48" y="164" font-size="16" fill="#F8FAFC" font-weight="600" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">Review ask sent</text>
+<text x="228" y="138" font-size="12" fill="#8FA3BC" font-weight="400" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">400 ms</text>
+<path d="M246,154 L257,154" stroke="#2A3D57" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<rect x="260" y="108" width="212" height="92" rx="10" fill="#0B1220" stroke="#1B2A40" stroke-width="1.5"/>
+<text x="276" y="138" font-size="14" fill="#F59E0B" font-weight="700" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">4s</text>
+<text x="276" y="164" font-size="16" fill="#F8FAFC" font-weight="600" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">Gentle reminder sent</text>
+<text x="456" y="138" font-size="12" fill="#8FA3BC" font-weight="400" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">4000 ms</text>
+<path d="M474,154 L485,154" stroke="#2A3D57" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<rect x="488" y="108" width="212" height="92" rx="10" fill="#111C2E" stroke="#D97706" stroke-width="1.5"/>
+<text x="504" y="138" font-size="14" fill="#F59E0B" font-weight="700" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">8s</text>
+<text x="504" y="164" font-size="16" fill="#F8FAFC" font-weight="600" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">Review link tapped</text>
+<text x="684" y="138" font-size="12" fill="#8FA3BC" font-weight="400" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">8000 ms</text>
+<path d="M702,154 L713,154" stroke="#2A3D57" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<rect x="716" y="108" width="212" height="92" rx="10" fill="#0B1220" stroke="#1B2A40" stroke-width="1.5"/>
+<text x="732" y="138" font-size="14" fill="#F59E0B" font-weight="700" text-anchor="start" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">11s</text>
+<text x="732" y="164" font-size="16" fill="#F8FAFC" font-weight="600" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">Thank-you sent</text>
+<text x="912" y="138" font-size="12" fill="#8FA3BC" font-weight="400" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">11000 ms</text>
+<text x="34" y="226" font-size="10.5" fill="#D97706" font-weight="700" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">OFF THE DEMO CLOCK, IN REAL LIFE</text>
+<text x="34" y="248" font-size="12.5" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">Right after you mark the job</text>
+<text x="34" y="265" font-size="12.5" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">done.</text>
+<text x="262" y="248" font-size="12.5" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">2 days later, only if the link</text>
+<text x="262" y="265" font-size="12.5" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">hasn't been tapped. One</text>
+<text x="262" y="282" font-size="12.5" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">reminder, then it stops.</text>
+<text x="490" y="248" font-size="12.5" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">Whenever they get to it. They</text>
+<text x="490" y="265" font-size="12.5" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">land on your page and tap</text>
+<text x="490" y="282" font-size="12.5" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">through to Google.</text>
+<text x="718" y="248" font-size="12.5" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">Right after the tap. No more</text>
+<text x="718" y="265" font-size="12.5" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">asks.</text>
+<rect x="32" y="330" width="936" height="68" rx="10" fill="#111C2E" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="48" y="356" font-size="15" fill="#F59E0B" font-weight="700" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">The demo always plays all four steps.</text>
+<text x="48" y="378" font-size="13.5" fill="#CBD5E1" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">A live install skips the reminder when the link was already tapped, and sends no further asks after the thank-you.</text>
+<text x="32" y="420" font-size="15" fill="#F8FAFC" font-weight="700" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">What the template editor refuses to save</text>
+<rect x="32" y="434" width="159.20000000000002" height="32" rx="16" fill="#0B1220" stroke="#2A3D57" stroke-width="1.5"/>
+<text x="45" y="455" font-size="13" fill="#CBD5E1" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">16 blocked phrases</text>
+<rect x="201.20000000000002" y="434" width="196.20000000000002" height="32" rx="16" fill="#0B1220" stroke="#2A3D57" stroke-width="1.5"/>
+<text x="214.20000000000002" y="455" font-size="13" fill="#CBD5E1" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">a missing {review_link}</text>
+<rect x="407.40000000000003" y="434" width="166.6" height="32" rx="16" fill="#0B1220" stroke="#2A3D57" stroke-width="1.5"/>
+<text x="420.40000000000003" y="455" font-size="13" fill="#CBD5E1" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">over 600 characters</text>
+<text x="32" y="492" font-size="12.5" fill="#8FA3BC" font-weight="400" text-anchor="start" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif">A text over 320 characters is flagged as likely to be split by the carrier, but still saves.</text>
+</svg>

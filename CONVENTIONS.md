@@ -1,6 +1,6 @@
 # Conventions
 
-Repository rules for instant-lead-response. Anything writing here follows them.
+Repository rules for review-ask. Anything writing here follows them.
 
 ## Attribution: none, ever
 

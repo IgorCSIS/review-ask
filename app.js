@@ -84,7 +84,14 @@
    * printed next to them.
    */
   function waitUntil(startedAt, ms) {
-    if (reducedMotion()) return Promise.resolve();
+    /*
+     * Reduced motion suppresses the pulse and the transitions, which is what
+     * the preference is actually about. It used to return here immediately,
+     * which collapsed all four steps into a single tick: the ask, the
+     * reminder, the tap and the thank-you landed at once while the readout
+     * still printed the full 11 seconds. The sequence is the content of this
+     * demo, not decoration, so it keeps its pacing for everybody.
+     */
     var remaining = ms - (Date.now() - startedAt);
     return new Promise(function (resolve) {
       window.setTimeout(resolve, remaining > 0 ? remaining : 0);
@@ -173,11 +180,20 @@
 
   function startClock(startedAt) {
     showElapsed(0);
-    if (reducedMotion()) return;
     els.elapsed.setAttribute("data-running", "true");
-    ticker = window.setInterval(function () {
-      showElapsed(Math.floor((Date.now() - startedAt) / 1000));
-    }, 100);
+    /*
+     * Reduced motion gets the same readout on a one second tick instead of ten
+     * a second. The thing that preference is about is the flicker, not the
+     * number. Stopping the ticker outright, which is what used to happen here,
+     * now that the steps keep their pacing would leave the counter frozen at
+     * 0s for the whole run and then jump to 11s at the end.
+     */
+    ticker = window.setInterval(
+      function () {
+        showElapsed(Math.floor((Date.now() - startedAt) / 1000));
+      },
+      reducedMotion() ? 1000 : 100,
+    );
   }
 
   function stopClock(seconds) {
@@ -226,6 +242,7 @@
         var value = saved[field];
         if (typeof value !== "string") return;
         if (value.length === 0 || value.length > DATA.MAX_TEMPLATE_CHARS) return;
+        if (hasBlockedPhrase(value)) return;
         out[key][field] = value;
       });
     });
@@ -505,23 +522,46 @@
    *
    * @returns {string} the problem, or an empty string when the wording passes
    */
+  /**
+   * Does this wording contain anything Google's policy does not allow?
+   *
+   * Shared by the editor and by the loader. The editor used to be the only
+   * caller, which made the phrase list a guard on one doorway rather than a
+   * property of what the page will show: a value already sitting in
+   * localStorage, written by an older build or by anyone with the console
+   * open, was rendered into the previews and the simulated messages without
+   * ever being tested. The loader drops a failing field back to the shipped
+   * default instead.
+   */
+  function hasBlockedPhrase(value) {
+    var lower = String(value).toLowerCase();
+    var hit = "";
+    DATA.BLOCKED_PHRASES.forEach(function (phrase) {
+      if (!hit && lower.indexOf(phrase) > -1) hit = phrase;
+    });
+    return hit;
+  }
+
   function checkTemplates(candidate) {
     var problem = "";
 
     DATA.TEMPLATE_FIELDS[channel].forEach(function (field) {
       if (problem) return;
       var value = String(candidate[field.key] || "");
-      var lower = value.toLowerCase();
-      DATA.BLOCKED_PHRASES.forEach(function (phrase) {
-        if (problem) return;
-        if (lower.indexOf(phrase) > -1) {
-          problem =
-            "Google doesn't allow offering anything for a review or asking only happy " +
-            'customers. Take out: "' +
-            phrase.trim() +
-            '".';
-        }
-      });
+      // D6: an empty field saved happily and then did not survive a reload,
+      // because the loader rejects a zero-length value. Blocked at the door.
+      if (value.length === 0) {
+        problem = "The " + field.label.toLowerCase() + " cannot be empty.";
+        return;
+      }
+      var phrase = hasBlockedPhrase(value);
+      if (phrase) {
+        problem =
+          "Google doesn't allow offering anything for a review or asking only happy " +
+          'customers. Take out: "' +
+          phrase.trim() +
+          '".';
+      }
     });
     if (problem) return problem;
 

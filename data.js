@@ -22,8 +22,10 @@
   };
 
   /**
-   * Three finished jobs. `asked` is demo state and starts false on every
-   * load, because progress lives in memory: a reload is a fresh demo.
+   * Three finished jobs.
+   *
+   * Which of them has been asked is not stored here. That is demo state and it
+   * lives in app.js, keyed by job id, so a reload is always a fresh demo.
    */
   var JOBS = [
     {

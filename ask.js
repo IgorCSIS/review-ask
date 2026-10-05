@@ -1,10 +1,11 @@
 /*
  * Review Ask: the homeowner page.
  *
- * One job, one button. There is no rating widget, no "how did we do", and no
- * branch of any kind, because a page that asks how you feel before it decides
- * which link to show you is review gating, and Google does not allow it.
- * Every homeowner who lands here sees the same page.
+ * One job, one review link. There is no rating widget and no "how did we do",
+ * because a page that asks how you feel before deciding which link to show you
+ * is review gating, and Google does not allow it. The "No thanks" button is a
+ * way out, not a fork: it changes nothing about the link, and every homeowner
+ * who lands here sees the same page.
  *
  * The only input is ?job=, and it is matched against the known ids rather
  * than read. An unknown value falls back to the generic wording and is never
@@ -50,9 +51,19 @@
     return found;
   }
 
-  /** Put the sample Google URL on screen as text, next to its label. */
+  /**
+   * Put the sample Google URL on screen, and point the button at it.
+   *
+   * The href is set from the constant rather than left as the copy that is
+   * written into the markup. Two literals of one URL is one too many, and the
+   * one that matters least, the label, was the only one data.js owned: editing
+   * the constant alone would have left the button going somewhere else. The
+   * markup keeps a literal so the page still works with scripting off, and
+   * this makes data.js the source of truth whenever scripting is on.
+   */
   function showSampleUrl() {
     if (els.sampleUrl) els.sampleUrl.textContent = DATA.SAMPLE_REVIEW_URL;
+    if (els.button) els.button.setAttribute("href", DATA.SAMPLE_REVIEW_URL);
   }
 
   /**
