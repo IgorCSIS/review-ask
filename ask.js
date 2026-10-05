@@ -91,9 +91,19 @@
    * answered, and a page that argues with that answer is the thing this demo
    * exists to avoid.
    */
+  /**
+   * Take the ask away, and say so.
+   *
+   * This removes the button the visitor just pressed, which destroys focus and
+   * used to announce nothing at all: the page silently lost its primary
+   * control. The replacement line is now a live region and takes focus, so a
+   * screen reader hears the outcome and the keyboard lands somewhere real.
+   */
   function declineAsk() {
     var line = document.createElement("p");
     line.className = "ask-body";
+    line.setAttribute("role", "status");
+    line.setAttribute("tabindex", "-1");
     line.textContent = "No problem. Thanks again for having us out.";
 
     var card = els.button.parentNode;
@@ -107,6 +117,8 @@
     if (els.secondary && els.secondary.parentNode) {
       els.secondary.parentNode.removeChild(els.secondary);
     }
+
+    line.focus();
   }
 
   showSampleUrl();

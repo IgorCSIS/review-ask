@@ -91,18 +91,6 @@ a {
   padding: 0 1.25rem;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
 /* ------------------------------------------------------------------ chrome */
 
 /*
@@ -196,11 +184,6 @@ a {
   color: var(--warn);
 }
 
-.chip-bad {
-  background: var(--bad-bg);
-  color: var(--bad);
-}
-
 /* ----------------------------------------------------------------- buttons */
 
 .btn {
@@ -240,18 +223,21 @@ a {
 }
 
 /* A disabled control must not look live. */
-.btn:disabled {
+.btn:disabled,
+.btn[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.btn:disabled:hover {
+.btn:disabled:hover,
+.btn[aria-disabled="true"]:hover {
   background: var(--ember-500);
   border-color: transparent;
   color: var(--ink-950);
 }
 
-.btn-ghost:disabled:hover {
+.btn-ghost:disabled:hover,
+.btn-ghost[aria-disabled="true"]:hover {
   background: transparent;
   border-color: var(--ink-600);
   color: var(--sand-200);
@@ -336,7 +322,7 @@ a {
   transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
-.seg:hover:not([aria-checked="true"]):not(:disabled) {
+.seg:hover:not([aria-checked="true"]):not(:disabled):not([aria-disabled="true"]) {
   background: var(--ink-800);
 }
 
@@ -346,7 +332,8 @@ a {
   color: var(--ember-400);
 }
 
-.seg:disabled {
+.seg:disabled,
+.seg[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -423,60 +410,6 @@ a {
   font-family: var(--mono);
   font-size: 0.68rem;
   color: var(--sand-400);
-}
-
-/* The customer's own reply, so it reads as coming from the other side. */
-.bubble-reply {
-  border-color: rgba(245, 158, 11, 0.3);
-  background: rgba(245, 158, 11, 0.07);
-}
-
-.notify {
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  background: var(--ink-950);
-  border-radius: 0.75rem;
-  padding: 0.95rem;
-}
-
-.notify-line {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 0.75rem;
-  margin-top: 0.7rem;
-  font-size: 0.9rem;
-}
-
-.notify-line dt {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--sand-400);
-  margin: 0;
-  min-width: 5.5rem;
-}
-
-.notify-line dd {
-  margin: 0;
-  color: var(--sand-50);
-  font-weight: 600;
-}
-
-/* Marks the sample phone itself, not just the page around it. */
-.notify-tag {
-  border: 1px solid rgba(245, 158, 11, 0.5);
-  border-radius: 999px;
-  padding: 0.05rem 0.45rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ember-400);
-}
-
-.notify-body {
-  margin-top: 0.9rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--ink-700);
-  font-size: 0.92rem;
 }
 
 /* ---------------------------------------------------------------- timeline */
@@ -683,33 +616,6 @@ a {
   margin-top: 2.5rem;
 }
 
-.offer-grid {
-  display: grid;
-  gap: 0.75rem;
-  margin-top: 1rem;
-}
-
-.offer-item {
-  border: 1px solid var(--ink-700);
-  border-radius: 0.65rem;
-  background: var(--ink-900);
-  padding: 0.9rem 1rem;
-}
-
-.offer-item dt {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--sand-400);
-}
-
-.offer-item dd {
-  margin: 0.35rem 0 0;
-  color: var(--sand-50);
-  font-weight: 600;
-}
-
 /* ------------------------------------------------------------------ status */
 
 .status {
@@ -722,14 +628,8 @@ a {
   color: var(--sand-200);
 }
 
-.status[data-tone="error"] {
-  border-color: rgba(248, 113, 113, 0.4);
-  background: var(--bad-bg);
-  color: var(--bad);
-}
-
 /*
- * The status line never hides. At rest it carries the honesty note, so the
+ * #run-status never hides: it ships with the honesty note, so the
  * first thing under the button that starts the demo is what the demo will
  * not do.
  */
@@ -769,10 +669,6 @@ a {
   .panels {
     grid-template-columns: 1fr 1fr;
   }
-
-  .offer-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 /* Reduced motion: no pulse, no transitions. The steps still sequence, they
@@ -808,7 +704,6 @@ a {
   left: 0;
 }
 
-/* Status tones beyond the error one the shared sheet ships with. */
 .status[data-tone="done"] {
   border-color: rgba(245, 158, 11, 0.45);
   color: var(--ember-400);
@@ -909,7 +804,7 @@ a {
   cursor: pointer;
 }
 
-.job-card:hover:not([aria-checked="true"]):not(:disabled) {
+.job-card:hover:not([aria-checked="true"]):not(:disabled):not([aria-disabled="true"]) {
   border-color: var(--ink-600);
 }
 
@@ -918,7 +813,8 @@ a {
   background: rgba(245, 158, 11, 0.08);
 }
 
-.job-card:disabled {
+.job-card:disabled,
+.job-card[aria-disabled="true"] {
   opacity: 0.5;
   cursor: not-allowed;
 }
@@ -1172,6 +1068,13 @@ a {
 .ask-card h1 {
   margin-top: 1.25rem;
   font-size: 1.5rem;
+}
+
+/* The decline line takes focus so the keyboard lands somewhere after the
+   button it replaced is gone. It is not a control, so it gets the outline
+   only from an explicit focus rather than on every click. */
+.ask-body[tabindex]:focus:not(:focus-visible) {
+  outline: none;
 }
 
 .ask-body {

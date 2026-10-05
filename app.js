@@ -587,6 +587,7 @@
   }
 
   function onSaveTemplates() {
+    if (running) return;
     var candidate = collectTemplates();
     var problem = checkTemplates(candidate);
     if (problem) {
@@ -607,6 +608,7 @@
   }
 
   function onRestoreTemplates() {
+    if (running) return;
     templates = defaults();
     clearStorage();
     renderTemplateFields();
@@ -616,34 +618,55 @@
 
   /* -------------------------------------------------------------- the run */
 
+  /**
+   * Lock the controls for the length of a run.
+   *
+   * aria-disabled rather than the disabled property, on purpose. The run is
+   * started from the keyboard as often as not, and disabling the button the
+   * visitor just pressed drops focus to the body for the whole eleven seconds
+   * with nothing focusable left in the region. Marked disabled, the controls
+   * keep their place in the tab order, announce themselves as unavailable, and
+   * the handlers below refuse the activation instead.
+   */
   function startBusy() {
     running = true;
-    els.run.disabled = true;
+    setLocked(els.run, true);
     els.run.setAttribute("aria-busy", "true");
     els.run.textContent = "Running demo…";
     els.segments.forEach(function (seg) {
-      seg.disabled = true;
+      setLocked(seg, true);
     });
+    lockJobCards(true);
+    setLocked(els.reset, true);
+  }
+
+  /** Mark a control unavailable without taking it out of the tab order. */
+  function setLocked(node, locked) {
+    if (locked) {
+      node.setAttribute("aria-disabled", "true");
+    } else {
+      node.removeAttribute("aria-disabled");
+    }
+  }
+
+  function lockJobCards(locked) {
     Array.prototype.slice.call(els.jobList.querySelectorAll(".job-card")).forEach(function (card) {
-      card.disabled = true;
+      setLocked(card, locked);
     });
-    els.reset.disabled = true;
   }
 
   function endBusy() {
     running = false;
-    els.run.disabled = false;
+    setLocked(els.run, false);
     els.run.removeAttribute("aria-busy");
-    // Run again stays the primary action. It was dropping to ghost here,
-    // which left the finished state with no ember button on the screen.
+    // Run again stays the primary action, so the finished state still has an
+    // ember button on the screen.
     els.run.textContent = "Run again";
     els.segments.forEach(function (seg) {
-      seg.disabled = false;
+      setLocked(seg, false);
     });
-    Array.prototype.slice.call(els.jobList.querySelectorAll(".job-card")).forEach(function (card) {
-      card.disabled = false;
-    });
-    els.reset.disabled = false;
+    lockJobCards(false);
+    setLocked(els.reset, false);
   }
 
   /**

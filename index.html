@@ -1,11 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <!--
-      First element in head on purpose: a policy that arrives after the first
-      script tag has already lost. default-src 'none' means anything not named
-      below is refused, so a stray CDN link or a tracker pasted in later fails
-      loudly in the console instead of quietly working.
+      Second only to the charset, and ahead of everything that loads: a policy
+      arriving after the first script tag has already lost. The charset goes
+      first because it has to land inside the first 1024 bytes to be sniffed,
+      and this comment is long enough to push it past that.
+
+      default-src 'none' means anything not named below is refused, so a stray
+      CDN link or a tracker pasted in later fails loudly in the console instead
+      of quietly working.
 
       frame-ancestors cannot be set from a meta tag, only from a response
       header, and GitHub Pages does not let you set headers. Noted in the
@@ -13,10 +18,9 @@
     -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
     />
     <meta name="referrer" content="no-referrer" />
-    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#070E18" />
 
@@ -213,7 +217,7 @@
         </div>
 
         <div class="job-list" id="job-list" role="radiogroup" aria-label="Pick a finished job">
-          <p class="panel-empty" id="job-loading">Loading sample jobs&hellip;</p>
+          <p class="panel-empty">Loading sample jobs&hellip;</p>
         </div>
 
         <p class="panel-empty jobs-empty" id="jobs-empty" hidden>

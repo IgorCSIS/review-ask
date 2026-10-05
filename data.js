@@ -17,8 +17,6 @@
    */
   var COMPANY = {
     name: "East County Comfort",
-    trade: "Heating and cooling",
-    city: "El Cajon",
   };
 
   /**
@@ -69,7 +67,13 @@
   var SAMPLE_REVIEW_URL =
     "https://search.google.com/local/writereview?placeid=SAMPLE_PLACE_ID";
 
-  /** Where {review_link} points in the demo: the branded page, per job. */
+  /**
+   * What {review_link} prints as, per job: the branded page's address.
+   *
+   * Deliberately without a scheme, because it is only ever rendered as text
+   * inside a simulated message and that is how a link reads in an SMS. Nothing
+   * follows it, and nothing builds an href from it.
+   */
   var ASK_PAGE_BASE = "igorcsis.github.io/review-ask/ask.html?job=";
 
   /**
